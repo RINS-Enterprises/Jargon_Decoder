@@ -1,0 +1,308 @@
+{
+  "name": "Jargon Decoder",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -624,
+        -240
+      ],
+      "id": "0254800c-6e9d-4921-909d-a141873a96ad",
+      "name": "When chat message received",
+      "webhookId": "831286d0-c427-4628-961e-c38130c8f048"
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        -256
+      ],
+      "id": "11abe586-1fd3-4d73-9e76-f2c1251e6de3",
+      "name": "Chat",
+      "webhookId": "79b41aed-9d4c-476b-9a5b-bb0ea8ab64f2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "425f148a-dc7e-42d3-abf9-893b5be404e5",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "MEDICAL",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -160,
+        -240
+      ],
+      "id": "e30d7200-d69b-427d-aeaa-6ee95d8f4f59",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Role: You are an Intent Classifier. Rules: Read the user's message. If it contains medical terminology, clinical results, or symptoms (like \"acute pain\"), you must output the exact word: MEDICAL. If it is a greeting or general conversation, output the exact word: CHAT. Do not say anything else. Output Format: Just one word: MEDICAL or CHAT."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -432,
+        -240
+      ],
+      "id": "0222cd1f-50c7-4577-897f-a27ab9788847",
+      "name": "Bouncer"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -432,
+        -64
+      ],
+      "id": "7a514b0f-9aef-462c-9f7e-308f914b66d3",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "fjZte5hrLTruBJof",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -144,
+        -48
+      ],
+      "id": "2ee9f6d0-e5a7-47a3-b28d-e08febb3af1b",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fjZte5hrLTruBJof",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -144,
+        128
+      ],
+      "id": "541a5970-6b75-47ab-ac23-90e5ffd01be8",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "fjZte5hrLTruBJof",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Role: You are a \"Medical Jargon Decoder.\" Translate complex medical terms into simple English for a 10-year-old.\n\nRules: Use analogies, no jargon, and keep it under 50 words.\n\nOutput Format: Provide only the simplified explanation."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        -256
+      ],
+      "id": "27e54b9a-6100-4b76-acec-6d83f4f79e32",
+      "name": "Jargon Decoder AI"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "Role: You are a friendly AI assistant. Your main job is to help translate confusing medical words into simple English for kids.\nRules: If a user says hello or asks what you do, be polite and explain that you can decode medical jargon. Keep it conversational and under 40 words. Never give actual medical advice or diagnose anyone.\nOutput Format: Just a friendly text response."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        -80
+      ],
+      "id": "b05f4548-70b7-4cea-9884-241536be54b1",
+      "name": "Friendly Chat AI"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Bouncer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Jargon Decoder AI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Friendly Chat AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bouncer": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bouncer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Jargon Decoder AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Friendly Chat AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jargon Decoder AI": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Friendly Chat AI": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b775c332-d8c0-484e-98d2-ad4f7eaac4c4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a9a15aca897a1c6cf18846a44761738b6f0381eeae8808c24069ddb76fc989e"
+  },
+  "id": "PPwmUB00BOAHN0XR",
+  "tags": []
+}
