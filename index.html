@@ -22,11 +22,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
         }
 
-        /* Customizes the "Hi there" header specifically */
+        /* Forces the header to look sharp and professional */
         .chat-header h1 {
-            font-size: 1.5rem !important;
+            font-size: 1.4rem !important;
             font-weight: 700 !important;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.01em;
         }
     </style>
 </head>
@@ -41,19 +41,19 @@
             mode: 'fullscreen',
             showWelcomeScreen: true,
             
-            /* UI Customization */
+            /* UI Customization & Branding */
             i18n: {
                 en: {
-                    title: 'Clinical Decoder',
-                    subtitle: 'Rins Enterprises Medical Intelligence',
-                    footer: 'Confidential AI Analysis',
-                    getStarted: 'Start New Decoding',
-                    inputPlaceholder: 'Paste medical notes or jargon here...',
+                    title: 'Jargon Decoder',
+                    subtitle: 'RINS Enterprises Medical Intelligence',
+                    footer: 'RINS ENTERPRISES Confidential AI',
+                    getStarted: 'Begin Analysis',
+                    inputPlaceholder: 'Paste medical notes here...',
                 }
             },
             initialMessages: [
-                'Ready for analysis.',
-                'Please provide the clinical text you wish to simplify.'
+                'System online.',
+                'Please provide the medical jargon you wish to have decoded.'
             ]
         });
     </script>
