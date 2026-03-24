@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jargon Decoder</title>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, system-ui, sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="n8n-chat"></div>
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        createChat({
+            /* @api: n8n Production Webhook Gateway */
+            webhookUrl: 'https://rins99.app.n8n.cloud/webhook/831286d0-c427-4628-961e-c38130c8f048/chat',
+            mode: 'fullscreen',
+            title: 'Medical Jargon Decoder',
+            subtitle: 'AI-Powered Clinical Terminology Translation',
+            showWelcomeScreen: true,
+            welcomeMessage: 'Hello. I am your clinical terminology assistant. Please provide the jargon or notes you wish to have decoded.',
+            placeholder: 'Type medical terms here...',
+            initialMessages: [
+                'Ready to assist.',
+                'How can I help you understand your health data today?'
+            ]
+        });
+    </script>
+</body>
+</html>
