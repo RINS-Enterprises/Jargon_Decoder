@@ -1,101 +1,107 @@
-# 🧠 AI Jargon Decoder (n8n Workflow)
+# AI Jargon Decoder
 
-An AI-powered workflow that classifies user input and simplifies medical jargon into easy-to-understand language.
+Workflow-based AI assistant designed to classify user input and simplify medical terminology into plain English using an n8n automation pipeline.
+
+This project focuses on practical AI workflow orchestration, conditional routing, and prompt-controlled responses rather than custom model training or advanced agent infrastructure.
 
 ---
 
 ## 🚀 Overview
 
-This system uses a multi-step AI workflow to detect whether a user message contains medical terminology and respond accordingly.
+The workflow processes incoming user messages and routes them through different response paths based on message type.
 
-- If the input is medical → it simplifies the jargon  
-- If the input is general → it responds as a friendly assistant  
+### Current Behavior
 
----
-
-## ⚙️ Tech Stack
-
-- n8n (workflow automation)
-- Google Gemini API (LLM)
-- LangChain nodes (chat + agents)
+- Medical-related input → simplified explanation flow
+- General conversation → friendly assistant response flow
 
 ---
 
-## 🔄 System Flow
+## 🛠 Tech Stack
 
-User Input → Intent Classification → Conditional Routing  
-→ Medical Decoder OR Friendly Chat → Response Output  
-
----
-
-## 🧩 Key Components
-
-### 1. Intent Classifier (Bouncer)
-- Classifies input as:
-  - MEDICAL  
-  - CHAT  
-- Uses Gemini model with strict output rules  
+- n8n
+- Google Gemini API
+- LangChain nodes
+- Prompt-based classification logic
 
 ---
 
-### 2. Conditional Logic (IF Node)
-- Routes requests based on classification result  
-- Ensures correct AI agent handles the input  
+## 🧩 Architecture
+
+```text
+User Input
+   ↓
+Intent Classification
+   ↓
+Conditional Routing
+   ├── Medical Simplification Flow
+   └── General Chat Flow
+   ↓
+Response Output
+```
 
 ---
 
-### 3. Medical Jargon Decoder
-- Translates complex medical terms into simple English  
-- Uses:
-  - short explanations  
-  - analogies  
-  - no technical jargon  
+## ⚙️ Technical Decisions
+
+### Workflow-Based Design
+The system uses n8n to simplify orchestration and rapid iteration of AI workflows.
+
+### Prompt-Constrained Output
+Classification and responses are controlled through structured prompting to improve consistency.
+
+### Conditional Routing
+Requests are separated into specialized processing flows to reduce unnecessary AI calls.
 
 ---
 
-### 4. Friendly Chat Assistant
-- Handles greetings and general queries  
-- Explains system purpose in simple terms  
+## 🔄 Current Limitations
+
+- No persistent database
+- No authentication system
+- No external API wrapper
+- No conversation memory
+- No automated evaluation/testing pipeline
 
 ---
 
-### 5. Response Output
-- Returns final response to user via chat interface  
+## 📈 Engineering Improvements Planned
+
+### Backend API Layer
+Expose workflow functionality through a FastAPI backend.
+
+### Logging & Monitoring
+Track request history, errors, and workflow performance.
+
+### Database Integration
+Store prompts, request history, and classification results.
+
+### Dockerization
+Containerize workflow environment for easier deployment.
+
+### Async Processing
+Move longer-running AI tasks into background workers.
 
 ---
 
-## 🎯 Purpose
+## 🎯 Project Purpose
 
-- Make medical terminology understandable for non-experts  
-- Provide a safe, non-diagnostic AI interaction  
-- Demonstrate AI workflow design using LLM orchestration  
+This repository is intended to demonstrate:
 
----
-
-## 💡 Key Features
-
-- Intent classification before response generation  
-- Multi-agent architecture (specialized roles)  
-- Controlled AI output using strict prompts  
-- Lightweight and scalable workflow design  
+- AI workflow orchestration
+- LLM integration patterns
+- Prompt engineering
+- Conditional automation logic
+- AI-assisted information simplification
 
 ---
 
-## ⚠️ Notes
+## ⚠️ Disclaimer
 
-- This system does not provide medical advice  
-- Designed for educational and demonstration purposes  
-
----
-
-## 📦 Project Type
-
-Workflow-based AI system built using n8n (JSON workflow included)
+This system does not provide medical advice and is intended for educational and demonstration purposes only.
 
 ---
 
-## 🚀 Status
+## 📌 Status
 
-Completed (functional workflow)
-
----
+Functional prototype / workflow implementation
